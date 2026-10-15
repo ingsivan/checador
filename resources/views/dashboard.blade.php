@@ -25,7 +25,7 @@
                         <div class="absolute inset-0 grid place-content-center">
                             <x-icon name="utensils" class="mx-auto mb-1 size-6 text-amber-500 group-data-[tone=over]:text-red-500" />
                             <span data-timer data-since="{{ $attendance->lunch_out_at->toIso8601String() }}" data-limit="{{ $lunchLimit }}"
-                                class="text-5xl font-extrabold tabular-nums tracking-tight group-data-[tone=over]:text-red-600 dark:group-data-[tone=over]:text-red-400">--:--</span>
+                                class="text-5xl font-extrabold tabular-nums tracking-tight data-[long=true]:text-[2.5rem] group-data-[tone=over]:text-red-600 dark:group-data-[tone=over]:text-red-400">--:--</span>
                             <span class="mt-1 text-xs font-semibold text-zinc-500">de {{ $lunchLimit }} min</span>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                     <x-status-pill status="working" />
                     <p class="mt-5 text-xs font-semibold tracking-wide text-zinc-500 uppercase">Tiempo trabajado hoy</p>
                     <p data-timer data-since="{{ now()->subSeconds($attendance->workedSeconds())->toIso8601String() }}"
-                        class="mt-1 text-6xl font-extrabold tabular-nums tracking-tight">--:--</p>
+                        class="mt-1 text-6xl font-extrabold tabular-nums tracking-tight max-sm:data-[long=true]:text-5xl">--:--</p>
                     <p class="mt-2 text-sm text-zinc-500">
                         Llegaste a las {{ $attendance->check_in_at->format('H:i') }}
                         @if ($attendance->lateMinutes() > 0)

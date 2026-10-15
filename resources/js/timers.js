@@ -16,6 +16,7 @@ function render(el, now) {
     const m = Math.floor((seconds % 3600) / 60);
     const s = seconds % 60;
 
+    el.dataset.long = String(h > 0); // lets the view shrink the text for h:mm:ss
     el.textContent = el.dataset.format === 'short'
         ? (h ? `${h} h ${m} min` : `${m} min`)
         : (h ? `${h}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`);

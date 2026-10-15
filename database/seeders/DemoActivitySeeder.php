@@ -69,10 +69,16 @@ class DemoActivitySeeder extends Seeder
         foreach ($developers as $i => $dev) {
             $marks = ['user_id' => $dev->id, 'date' => $now->toDateString()];
 
+            // Arrive around their scheduled time; if that is still ahead (seeding at night), a few hours ago.
+            $arrival = $now->copy()->setTimeFromTimeString($dev->work_start)->addMinutes(($i * 7) % 15 - 5);
+            if ($arrival->gt($now->copy()->subHours(2))) {
+                $arrival = $now->copy()->subMinutes(180 + $i * 7);
+            }
+
             match ($i % 5) {
-                0, 1 => $marks += ['check_in_at' => $now->copy()->subMinutes(180 + $i * 7)],
-                2 => $marks += ['check_in_at' => $now->copy()->subMinutes(240), 'lunch_out_at' => $now->copy()->subMinutes(22 + $i)],
-                3 => $marks += ['check_in_at' => $now->copy()->subMinutes(300), 'lunch_out_at' => $now->copy()->subMinutes(72)],
+                0, 1 => $marks += ['check_in_at' => $arrival],
+                2 => $marks += ['check_in_at' => $arrival, 'lunch_out_at' => $now->copy()->subMinutes(22 + $i)],
+                3 => $marks += ['check_in_at' => $arrival, 'lunch_out_at' => $now->copy()->subMinutes(72)],
                 default => null,
             };
 
