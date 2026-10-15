@@ -51,4 +51,13 @@ class AuthTest extends TestCase
 
         $this->assertGuest();
     }
+
+    public function test_create_admin_command(): void
+    {
+        $this->artisan('checador:admin', ['name' => 'Nereo', 'email' => 'nereo@empresa.com'])
+            ->expectsQuestion('Contraseña (mínimo 8 caracteres)', 'secreto123')
+            ->assertSuccessful();
+
+        $this->assertTrue(User::where('email', 'nereo@empresa.com')->sole()->isAdmin());
+    }
 }

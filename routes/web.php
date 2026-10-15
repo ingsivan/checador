@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ReportController;
@@ -39,5 +40,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('projects', ProjectController::class)->except(['show', 'destroy']);
         Route::get('reportes', [ReportController::class, 'index'])->name('reports');
         Route::get('reportes/csv', [ReportController::class, 'export'])->name('reports.export');
+        Route::get('asistencias/{user}', [AttendanceController::class, 'edit'])->name('attendance.edit');
+        Route::put('asistencias/{user}/{date}', [AttendanceController::class, 'update'])
+            ->where('date', '\d{4}-\d{2}-\d{2}')->name('attendance.update');
     });
 });

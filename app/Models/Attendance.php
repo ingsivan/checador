@@ -83,6 +83,10 @@ class Attendance extends Model
             return 0;
         }
 
+        if ($this->check_out_at === null && ! $this->isOpenToday()) {
+            return 0; // forgot to check out: flagged as "sin salida", not counted
+        }
+
         $now ??= Carbon::now();
         $end = $this->check_out_at ?? $now;
         $lunch = 0;
@@ -103,7 +107,14 @@ class Attendance extends Model
             return 0;
         }
 
-        $end = $this->lunch_in_at ?? ($this->check_out_at ?? $now ?? Carbon::now());
+        $end = $this->lunch_in_at ?? $this->check_out_at;
+
+        if ($end === null) {
+            if (! $this->isOpenToday()) {
+                return 0; // a past day nobody closed: we can't know how long it was
+            }
+            $end = $now ?? Carbon::now();
+        }
 
         return (int) $this->lunch_out_at->diffInMinutes($end);
     }
@@ -114,6 +125,14 @@ class Attendance extends Model
     public function workedMinutes(?CarbonInterface $now = null): int
     {
         return intdiv($this->workedSeconds($now), 60);
+    }
+
+    /**
+     * Only today's record can still be running; older ones without an end are incomplete.
+     */
+    public function isOpenToday(): bool
+    {
+        return $this->date === null || $this->date->isToday();
     }
 
     public function isOverLunch(?CarbonInterface $now = null): bool
