@@ -48,9 +48,9 @@
                 @endif
                 <a href="{{ route('dashboard') }}" @class(['flex items-center gap-2.5', 'max-md:hidden' => $back])>
                     <x-logo class="size-8" />
-                    <span class="text-[17px] font-extrabold tracking-tight max-md:hidden">Checador</span>
+                    <span class="text-[17px] font-extrabold tracking-tight">Checador</span>
                 </a>
-                @if ($title)
+                @if ($back && $title)
                     <span class="truncate text-[17px] font-bold md:hidden">{{ $title }}</span>
                 @endif
 

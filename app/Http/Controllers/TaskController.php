@@ -59,7 +59,7 @@ class TaskController extends Controller
      */
     private function validated(Request $request): array
     {
-        return $request->validate([
+        $data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:2000'],
             'project_id' => ['required', Rule::exists('projects', 'id')->where('is_active', true)],
@@ -67,5 +67,8 @@ class TaskController extends Controller
             'status' => ['required', Rule::in(array_keys(Task::STATUSES))],
             'due_date' => ['nullable', 'date'],
         ]);
+
+        // The form always sends every field; a missing optional one means "clear it".
+        return $data + ['description' => null, 'user_id' => null, 'due_date' => null];
     }
 }

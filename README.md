@@ -8,7 +8,7 @@ Hecho con Laravel 13 (PHP 8.3+), Blade y Tailwind CSS 4.
 
 - **Paso 1 (listo):** login, rol de administrador, alta y edición de empleados, 10 empleados de prueba.
 - **Paso 2 (listo):** checador con timer de comida, equipo de hoy, historial y diseño tipo app.
-- Paso 3: kanban de proyectos.
+- **Paso 3 (listo):** tablero kanban con proyectos, arrastrar y soltar, y filtros.
 - Paso 4: reportes y guía para subir a HostGator.
 
 ## Correr en tu compu
