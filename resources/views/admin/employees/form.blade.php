@@ -1,9 +1,9 @@
 @php($editing = $employee->exists)
 
-<x-app-layout :title="$editing ? 'Editar empleado' : 'Agregar empleado'">
+<x-app-layout :title="$editing ? 'Editar empleado' : 'Agregar empleado'" :back="route('admin.employees.index')">
     <div class="mx-auto max-w-2xl">
-        <a href="{{ route('admin.employees.index') }}" class="text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-white">← Empleados</a>
-        <h1 class="mt-2 mb-6 text-2xl font-bold tracking-tight">{{ $editing ? 'Editar a '.$employee->name : 'Agregar empleado' }}</h1>
+        <a href="{{ route('admin.employees.index') }}" class="text-sm font-semibold text-zinc-500 hover:text-zinc-900 max-md:hidden dark:hover:text-white">← Empleados</a>
+        <h1 class="mt-1 mb-5 text-[26px] font-extrabold tracking-tight">{{ $editing ? 'Editar a '.$employee->name : 'Agregar empleado' }}</h1>
 
         <form method="POST" action="{{ $editing ? route('admin.employees.update', $employee) : route('admin.employees.store') }}" class="card space-y-5 p-6">
             @csrf

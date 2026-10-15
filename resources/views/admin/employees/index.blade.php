@@ -1,26 +1,21 @@
-<x-app-layout title="Empleados">
-    <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
-        <div>
-            <h1 class="text-2xl font-bold tracking-tight">Empleados</h1>
-            <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{{ $employees->where('is_active', true)->count() }} activos de {{ $employees->count() }}</p>
-        </div>
-        <a href="{{ route('admin.employees.create') }}" class="btn-primary">
-            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-            Agregar empleado
-        </a>
-    </div>
+<x-app-layout title="Empleados" :back="route('more')">
+    <x-page-header title="Empleados" :subtitle="$employees->where('is_active', true)->count().' activos de '.$employees->count()">
+        <x-slot:actions>
+            <a href="{{ route('admin.employees.create') }}" class="btn-primary">
+                <x-icon name="plus" class="size-4" /> Agregar
+            </a>
+        </x-slot:actions>
+    </x-page-header>
 
     <form method="GET" class="mb-4">
         <label for="q" class="sr-only">Buscar</label>
-        <input id="q" name="q" value="{{ $search }}" type="search" placeholder="Buscar por nombre o correo" class="input max-w-sm">
+        <input id="q" name="q" value="{{ $search }}" type="search" placeholder="Buscar por nombre o correo" class="input sm:max-w-sm">
     </form>
 
     <div class="card divide-y divide-zinc-200 overflow-hidden dark:divide-zinc-800">
         @forelse ($employees as $employee)
             <div @class(['flex flex-wrap items-center gap-4 p-4 sm:flex-nowrap', 'opacity-60' => ! $employee->is_active])>
-                <span class="grid size-10 shrink-0 place-items-center rounded-full bg-zinc-100 text-sm font-semibold text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">
-                    {{ $employee->initials() }}
-                </span>
+                <x-avatar :user="$employee" />
                 <div class="min-w-0 flex-1">
                     <p class="flex flex-wrap items-center gap-2 font-medium">
                         {{ $employee->name }}
@@ -33,7 +28,7 @@
                     </p>
                     <p class="truncate text-sm text-zinc-500 dark:text-zinc-400">{{ $employee->position ?? 'Sin puesto' }} · {{ $employee->email }}</p>
                 </div>
-                <p class="text-sm text-zinc-500 tabular-nums dark:text-zinc-400">{{ substr($employee->work_start, 0, 5) }}–{{ substr($employee->work_end, 0, 5) }}</p>
+                <p class="text-sm text-zinc-500 tabular-nums max-sm:order-last max-sm:w-full max-sm:pl-15 dark:text-zinc-400">{{ substr($employee->work_start, 0, 5) }}–{{ substr($employee->work_end, 0, 5) }}</p>
                 <div class="flex gap-2">
                     <a href="{{ route('admin.employees.edit', $employee) }}" class="btn-secondary px-3 py-1.5">Editar</a>
                     @unless ($employee->is(auth()->user()))

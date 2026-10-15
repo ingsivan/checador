@@ -1,0 +1,16 @@
+{{-- Checador mark: a stopwatch whose face carries a check. --}}
+<svg {{ $attributes->merge(['class' => 'shrink-0']) }} viewBox="0 0 64 64" aria-hidden="true">
+    <defs>
+        <linearGradient id="logo-g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#6366f1"/>
+            <stop offset="1" stop-color="#8b5cf6"/>
+        </linearGradient>
+    </defs>
+    <rect width="64" height="64" rx="16" fill="url(#logo-g)"/>
+    <g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M27 12.5h10M32 12.5v4.5" stroke-width="4"/>
+        <path d="m44.5 19.5 2.5-2.5" stroke-width="4"/>
+        <circle cx="32" cy="35" r="16" stroke-width="4"/>
+        <path d="m24.5 35.5 5.5 5.5 10-11" stroke-width="4.5"/>
+    </g>
+</svg>

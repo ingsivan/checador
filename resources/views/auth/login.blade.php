@@ -1,18 +1,16 @@
 <x-app-layout title="Iniciar sesión">
-    <div class="mx-auto mt-6 max-w-sm sm:mt-16">
+    <div class="mx-auto flex min-h-[calc(100dvh-6rem)] max-w-sm flex-col justify-center">
         <div class="mb-8 text-center">
-            <span class="mx-auto mb-4 grid size-12 place-items-center rounded-2xl bg-brand-600 text-white shadow-lg shadow-brand-600/30">
-                <svg class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>
-            </span>
-            <h1 class="text-2xl font-bold tracking-tight">{{ config('app.name') }}</h1>
-            <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Entra para registrar tu día.</p>
+            <x-logo class="mx-auto size-20 drop-shadow-xl" />
+            <h1 class="mt-5 text-3xl font-extrabold tracking-tight">Checador</h1>
+            <p class="mt-1.5 text-zinc-500 dark:text-zinc-400">Llegadas, comida y proyectos del equipo.</p>
         </div>
 
-        <form method="POST" action="{{ route('login') }}" class="card space-y-5 p-6">
+        <form method="POST" action="{{ route('login') }}" class="card space-y-4 p-6">
             @csrf
             <div>
                 <label for="email" class="label">Correo</label>
-                <input id="email" name="email" type="email" value="{{ old('email') }}" class="input" autocomplete="username" required autofocus>
+                <input id="email" name="email" type="email" value="{{ old('email') }}" class="input" autocomplete="username" inputmode="email" placeholder="tu@empresa.com" required autofocus>
                 @error('email') <p class="field-error">{{ $message }}</p> @enderror
             </div>
             <div>
@@ -20,11 +18,15 @@
                 <input id="password" name="password" type="password" class="input" autocomplete="current-password" required>
                 @error('password') <p class="field-error">{{ $message }}</p> @enderror
             </div>
-            <label class="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-                <input type="checkbox" name="remember" class="size-4 rounded border-zinc-300 accent-brand-600">
+            <label class="flex items-center gap-2.5 text-sm text-zinc-600 dark:text-zinc-400">
+                <input type="checkbox" name="remember" class="size-4 rounded accent-brand-600" checked>
                 Mantener la sesión abierta
             </label>
-            <button class="btn-primary w-full py-3">Entrar</button>
+            <button class="btn-primary w-full py-3.5 text-base">Entrar</button>
         </form>
+
+        <a href="{{ route('help') }}" class="mt-6 inline-flex items-center justify-center gap-1.5 text-sm font-semibold text-brand-600 dark:text-brand-400">
+            <x-icon name="help" class="size-4" /> ¿Cómo funciona?
+        </a>
     </div>
 </x-app-layout>

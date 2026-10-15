@@ -46,5 +46,7 @@ class DatabaseSeeder extends Seeder
                 'work_end' => date('H:i', strtotime($start) + 9 * 3600),
             ]);
         }
+
+        $this->call(DemoActivitySeeder::class);
     }
 }
